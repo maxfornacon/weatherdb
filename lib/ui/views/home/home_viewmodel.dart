@@ -75,9 +75,13 @@ class HomeViewModel extends FutureViewModel<List<Post>> {
     return list.map((e) => Grocery.fromJson(e)).toList();
   }
 
-  void toCreateGroceryView() {
-    _navigationService.navigateTo(Routes.createGroceryView);
+  void toCreatePostView() {
+    _navigationService.navigateTo(Routes.createPostView);
   }
+
+  // void toCreateGroceryView() {
+  //   _navigationService.navigateTo(Routes.createGroceryView);
+  // }
 
   void toGroceryDetailView({required String id}) {
     _navigationService.navigateTo(

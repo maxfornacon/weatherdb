@@ -47,3 +47,26 @@ Map<String, dynamic> _$$_LikedToJson(_$_Liked instance) => <String, dynamic>{
       'liked_post': instance.postId,
       'users': instance.user,
     };
+
+_$_PostDto _$$_PostDtoFromJson(Map<String, dynamic> json) => _$_PostDto(
+      text: json['text'] as String,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      longitude: (json['longitude'] as num).toDouble(),
+      latitude: (json['latitude'] as num).toDouble(),
+      temperature: (json['temperature'] as num).toDouble(),
+      airPressure: (json['air_pressure'] as num).toDouble(),
+      humidity: (json['humidity'] as num).toDouble(),
+      postedBy: json['posted_by'] as String,
+    );
+
+Map<String, dynamic> _$$_PostDtoToJson(_$_PostDto instance) =>
+    <String, dynamic>{
+      'text': instance.text,
+      'created_at': instance.createdAt.toIso8601String(),
+      'longitude': instance.longitude,
+      'latitude': instance.latitude,
+      'temperature': instance.temperature,
+      'air_pressure': instance.airPressure,
+      'humidity': instance.humidity,
+      'posted_by': instance.postedBy,
+    };

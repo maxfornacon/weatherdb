@@ -18,6 +18,9 @@ class AppTextFormField extends StatelessWidget {
   final VoidCallback? onEditingComplete;
   final ValueChanged<String>? onFieldSubmitted;
 
+  final int? maxLines;
+  final int? minLines;
+
   const AppTextFormField({
     Key? key,
     required this.controller,
@@ -36,6 +39,8 @@ class AppTextFormField extends StatelessWidget {
     this.onTap,
     this.onEditingComplete,
     this.onFieldSubmitted,
+    this.maxLines = 1,
+    this.minLines,
   }) : super(key: key);
 
   @override
@@ -51,6 +56,8 @@ class AppTextFormField extends StatelessWidget {
       onSaved: onSaved,
       onTap: onTap,
       validator: validator,
+      maxLines: maxLines,
+      minLines: minLines,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,

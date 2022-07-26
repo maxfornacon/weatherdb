@@ -12,6 +12,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../ui/views/create_grocery/create_grocery_view.dart';
+import '../ui/views/create_post/create_post_view.dart';
 import '../ui/views/create_product/create_product_view.dart';
 import '../ui/views/grocery_detail/grocery_detail_view.dart';
 import '../ui/views/home/home_view.dart';
@@ -29,6 +30,7 @@ class Routes {
   static const String createProductView = '/create-product-view';
   static const String groceryDetailView = '/grocery-detail-view';
   static const String productSelectionView = '/product-selection-view';
+  static const String createPostView = '/create-post-view';
   static const all = <String>{
     startupView,
     homeView,
@@ -38,6 +40,7 @@ class Routes {
     createProductView,
     groceryDetailView,
     productSelectionView,
+    createPostView,
   };
 }
 
@@ -53,6 +56,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.createProductView, page: CreateProductView),
     RouteDef(Routes.groceryDetailView, page: GroceryDetailView),
     RouteDef(Routes.productSelectionView, page: ProductSelectionView),
+    RouteDef(Routes.createPostView, page: CreatePostView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -110,6 +114,12 @@ class StackedRouter extends RouterBase {
           key: args.key,
           groceryId: args.groceryId,
         ),
+        settings: data,
+      );
+    },
+    CreatePostView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => CreatePostView(),
         settings: data,
       );
     },
@@ -266,6 +276,22 @@ extension NavigatorStateExtension on NavigationService {
     return navigateTo(
       Routes.productSelectionView,
       arguments: ProductSelectionViewArguments(key: key, groceryId: groceryId),
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToCreatePostView({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.createPostView,
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

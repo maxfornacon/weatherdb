@@ -6,6 +6,7 @@ import 'package:weather/services/local_storage_service.dart';
 import 'package:weather/services/post_service.dart';
 import 'package:weather/services/product_service.dart';
 import 'package:weather/ui/views/create_grocery/create_grocery_view.dart';
+import 'package:weather/ui/views/create_post/create_post_view.dart';
 import 'package:weather/ui/views/create_product/create_product_view.dart';
 import 'package:weather/ui/views/grocery_detail/grocery_detail_view.dart';
 import 'package:weather/ui/views/home/home_view.dart';
@@ -25,6 +26,8 @@ import 'package:weather/ui/views/startup/startup_view.dart';
     CupertinoRoute(page: CreateProductView),
     CupertinoRoute(page: GroceryDetailView),
     CupertinoRoute(page: ProductSelectionView),
+
+    MaterialRoute(page: CreatePostView),
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),

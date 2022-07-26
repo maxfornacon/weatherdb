@@ -581,3 +581,293 @@ abstract class _Liked implements Liked {
   _$$_LikedCopyWith<_$_Liked> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+PostDto _$PostDtoFromJson(Map<String, dynamic> json) {
+  return _PostDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$PostDto {
+  String get text => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  double get longitude => throw _privateConstructorUsedError;
+  double get latitude => throw _privateConstructorUsedError;
+  double get temperature => throw _privateConstructorUsedError;
+  @JsonKey(name: 'air_pressure')
+  double get airPressure => throw _privateConstructorUsedError;
+  double get humidity => throw _privateConstructorUsedError;
+  @JsonKey(name: 'posted_by')
+  String get postedBy => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PostDtoCopyWith<PostDto> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PostDtoCopyWith<$Res> {
+  factory $PostDtoCopyWith(PostDto value, $Res Function(PostDto) then) =
+      _$PostDtoCopyWithImpl<$Res>;
+  $Res call(
+      {String text,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      double longitude,
+      double latitude,
+      double temperature,
+      @JsonKey(name: 'air_pressure') double airPressure,
+      double humidity,
+      @JsonKey(name: 'posted_by') String postedBy});
+}
+
+/// @nodoc
+class _$PostDtoCopyWithImpl<$Res> implements $PostDtoCopyWith<$Res> {
+  _$PostDtoCopyWithImpl(this._value, this._then);
+
+  final PostDto _value;
+  // ignore: unused_field
+  final $Res Function(PostDto) _then;
+
+  @override
+  $Res call({
+    Object? text = freezed,
+    Object? createdAt = freezed,
+    Object? longitude = freezed,
+    Object? latitude = freezed,
+    Object? temperature = freezed,
+    Object? airPressure = freezed,
+    Object? humidity = freezed,
+    Object? postedBy = freezed,
+  }) {
+    return _then(_value.copyWith(
+      text: text == freezed
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      longitude: longitude == freezed
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      latitude: latitude == freezed
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      temperature: temperature == freezed
+          ? _value.temperature
+          : temperature // ignore: cast_nullable_to_non_nullable
+              as double,
+      airPressure: airPressure == freezed
+          ? _value.airPressure
+          : airPressure // ignore: cast_nullable_to_non_nullable
+              as double,
+      humidity: humidity == freezed
+          ? _value.humidity
+          : humidity // ignore: cast_nullable_to_non_nullable
+              as double,
+      postedBy: postedBy == freezed
+          ? _value.postedBy
+          : postedBy // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_PostDtoCopyWith<$Res> implements $PostDtoCopyWith<$Res> {
+  factory _$$_PostDtoCopyWith(
+          _$_PostDto value, $Res Function(_$_PostDto) then) =
+      __$$_PostDtoCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String text,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      double longitude,
+      double latitude,
+      double temperature,
+      @JsonKey(name: 'air_pressure') double airPressure,
+      double humidity,
+      @JsonKey(name: 'posted_by') String postedBy});
+}
+
+/// @nodoc
+class __$$_PostDtoCopyWithImpl<$Res> extends _$PostDtoCopyWithImpl<$Res>
+    implements _$$_PostDtoCopyWith<$Res> {
+  __$$_PostDtoCopyWithImpl(_$_PostDto _value, $Res Function(_$_PostDto) _then)
+      : super(_value, (v) => _then(v as _$_PostDto));
+
+  @override
+  _$_PostDto get _value => super._value as _$_PostDto;
+
+  @override
+  $Res call({
+    Object? text = freezed,
+    Object? createdAt = freezed,
+    Object? longitude = freezed,
+    Object? latitude = freezed,
+    Object? temperature = freezed,
+    Object? airPressure = freezed,
+    Object? humidity = freezed,
+    Object? postedBy = freezed,
+  }) {
+    return _then(_$_PostDto(
+      text: text == freezed
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      longitude: longitude == freezed
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      latitude: latitude == freezed
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      temperature: temperature == freezed
+          ? _value.temperature
+          : temperature // ignore: cast_nullable_to_non_nullable
+              as double,
+      airPressure: airPressure == freezed
+          ? _value.airPressure
+          : airPressure // ignore: cast_nullable_to_non_nullable
+              as double,
+      humidity: humidity == freezed
+          ? _value.humidity
+          : humidity // ignore: cast_nullable_to_non_nullable
+              as double,
+      postedBy: postedBy == freezed
+          ? _value.postedBy
+          : postedBy // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_PostDto implements _PostDto {
+  const _$_PostDto(
+      {required this.text,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      required this.longitude,
+      required this.latitude,
+      required this.temperature,
+      @JsonKey(name: 'air_pressure') required this.airPressure,
+      required this.humidity,
+      @JsonKey(name: 'posted_by') required this.postedBy});
+
+  factory _$_PostDto.fromJson(Map<String, dynamic> json) =>
+      _$$_PostDtoFromJson(json);
+
+  @override
+  final String text;
+  @override
+  @JsonKey(name: 'created_at')
+  final DateTime createdAt;
+  @override
+  final double longitude;
+  @override
+  final double latitude;
+  @override
+  final double temperature;
+  @override
+  @JsonKey(name: 'air_pressure')
+  final double airPressure;
+  @override
+  final double humidity;
+  @override
+  @JsonKey(name: 'posted_by')
+  final String postedBy;
+
+  @override
+  String toString() {
+    return 'PostDto(text: $text, createdAt: $createdAt, longitude: $longitude, latitude: $latitude, temperature: $temperature, airPressure: $airPressure, humidity: $humidity, postedBy: $postedBy)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_PostDto &&
+            const DeepCollectionEquality().equals(other.text, text) &&
+            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
+            const DeepCollectionEquality().equals(other.longitude, longitude) &&
+            const DeepCollectionEquality().equals(other.latitude, latitude) &&
+            const DeepCollectionEquality()
+                .equals(other.temperature, temperature) &&
+            const DeepCollectionEquality()
+                .equals(other.airPressure, airPressure) &&
+            const DeepCollectionEquality().equals(other.humidity, humidity) &&
+            const DeepCollectionEquality().equals(other.postedBy, postedBy));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(text),
+      const DeepCollectionEquality().hash(createdAt),
+      const DeepCollectionEquality().hash(longitude),
+      const DeepCollectionEquality().hash(latitude),
+      const DeepCollectionEquality().hash(temperature),
+      const DeepCollectionEquality().hash(airPressure),
+      const DeepCollectionEquality().hash(humidity),
+      const DeepCollectionEquality().hash(postedBy));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_PostDtoCopyWith<_$_PostDto> get copyWith =>
+      __$$_PostDtoCopyWithImpl<_$_PostDto>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_PostDtoToJson(
+      this,
+    );
+  }
+}
+
+abstract class _PostDto implements PostDto {
+  const factory _PostDto(
+      {required final String text,
+      @JsonKey(name: 'created_at') required final DateTime createdAt,
+      required final double longitude,
+      required final double latitude,
+      required final double temperature,
+      @JsonKey(name: 'air_pressure') required final double airPressure,
+      required final double humidity,
+      @JsonKey(name: 'posted_by') required final String postedBy}) = _$_PostDto;
+
+  factory _PostDto.fromJson(Map<String, dynamic> json) = _$_PostDto.fromJson;
+
+  @override
+  String get text;
+  @override
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt;
+  @override
+  double get longitude;
+  @override
+  double get latitude;
+  @override
+  double get temperature;
+  @override
+  @JsonKey(name: 'air_pressure')
+  double get airPressure;
+  @override
+  double get humidity;
+  @override
+  @JsonKey(name: 'posted_by')
+  String get postedBy;
+  @override
+  @JsonKey(ignore: true)
+  _$$_PostDtoCopyWith<_$_PostDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}

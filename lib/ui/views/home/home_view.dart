@@ -27,7 +27,7 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
         title: const Text('Weathr'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: viewModel.toCreateGroceryView,
+        onPressed: viewModel.toCreatePostView,
         child: const Icon(Icons.add),
       ),
       body: RefreshIndicator(

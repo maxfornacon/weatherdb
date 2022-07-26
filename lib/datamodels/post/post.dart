@@ -60,3 +60,22 @@ class Liked with _$Liked {
       _$LikedFromJson(json);
 }
 
+
+@freezed
+class PostDto with _$PostDto {
+  const factory PostDto({
+    required String text,
+    @JsonKey(name: 'created_at') required DateTime createdAt,
+    required double longitude,
+    required double latitude,
+    required double temperature,
+    @JsonKey(name: 'air_pressure') required double airPressure,
+    required double humidity,
+    @JsonKey(name: 'posted_by') required String postedBy,
+
+  }) = _PostDto;
+
+  factory PostDto.fromJson(Map<String, dynamic> json) =>
+      _$PostDtoFromJson(json);
+}
+
