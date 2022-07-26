@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:weather/app/app.locator.dart';
+import 'package:weather/app/app.router.dart';
+import 'package:weather/styles/themes.dart';
+import 'package:stacked_themes/stacked_themes.dart';
 
-import 'views/views.dart';
-
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  await ThemeManager.initialise();
+  setupLocator();
+  runApp(App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+class App extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Supabase Demo',
-      debugShowCheckedModeBanner: false,
-      initialRoute: 'login',
-      routes: {
-        'login': (_) => const LoginPage(),
-        '/signup': (_) => const SignUpPage(),
-        '/home': (_) => const HomeScreen(),
-      },
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ThemeBuilder(
+      themes: themes,
+      builder: (context, regularTheme, darkTheme, themeMode) => MaterialApp(
+        title: 'Supabase Grocery App',
+        theme: regularTheme,
+        darkTheme: darkTheme,
+        themeMode: themeMode,
+        navigatorKey: StackedService.navigatorKey,
+        onGenerateRoute: StackedRouter().onGenerateRoute,
       ),
-      home: const LoginPage(),
     );
   }
 }
