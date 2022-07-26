@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppTextFormField extends StatelessWidget {
+class AppTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
   final String labelText;
@@ -44,28 +44,59 @@ class AppTextFormField extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<AppTextFormField> createState() => _AppTextFormFieldState();
+}
+
+class _AppTextFormFieldState extends State<AppTextFormField> {
+  // void _requestFocus(){
+  //   setState(() {
+  //     FocusScope.of(context).requestFocus(widget.focusNode);
+  //   });
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.focusNode.addListener(() {
+      setState(() {
+
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
-      focusNode: focusNode,
-      obscureText: obscureText ?? false,
-      keyboardType: keyboardType,
-      onChanged: onChanged,
-      onEditingComplete: onEditingComplete,
-      onFieldSubmitted: onFieldSubmitted,
-      onSaved: onSaved,
-      onTap: onTap,
-      validator: validator,
-      maxLines: maxLines,
-      minLines: minLines,
+      controller: widget.controller,
+      focusNode: widget.focusNode,
+      obscureText: widget.obscureText ?? false,
+      keyboardType: widget.keyboardType,
+      onChanged: widget.onChanged,
+      onEditingComplete: widget.onEditingComplete,
+      onFieldSubmitted: widget.onFieldSubmitted,
+      onSaved: widget.onSaved,
+      // onTap: _requestFocus,
+      validator: widget.validator,
+      maxLines: widget.maxLines,
+      minLines: widget.minLines,
+      cursorColor: Theme.of(context).primaryColor,
       decoration: InputDecoration(
-        labelText: labelText,
-        hintText: hintText,
-        helperText: helperText,
-        errorText: errorText,
-        prefixText: prefixText,
-        suffixText: suffixText,
+        labelText: widget.labelText,
+        focusColor: Theme.of(context).primaryColor,
+        labelStyle: TextStyle(
+          color: widget.focusNode.hasFocus ? Theme.of(context).primaryColor : null
+        ),
+        hintText: widget.hintText,
+        helperText: widget.helperText,
+        errorText: widget.errorText,
+        prefixText: widget.prefixText,
+        suffixText: widget.suffixText,
         border: OutlineInputBorder(),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
       ),
     );
   }

@@ -192,10 +192,50 @@ class _Body extends StatelessWidget {
         ));
 
         for (AppImage image in item.images!) {
-          images.add(Image.network(
-            image.url,
-            fit: BoxFit.cover,
-          ));
+          images.add(
+              Stack(
+                children: [
+                  Center(
+                    child: Image.network(
+                      'https://hqtlidhkyxtztlthydry.supabase.co/storage/v1/object/public/${image.url}',
+                      fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: Theme.of(context).primaryColor,
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  /// Centered label showing the title of image
+                  Positioned(
+                    bottom: 20.0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      color: Colors.black.withOpacity(0.5),
+                      child: Text(
+                        image.title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+          );
         }
 
         return Column(
@@ -282,7 +322,7 @@ class _Body extends StatelessWidget {
         );
       },
       separatorBuilder: (BuildContext context, int index) {
-        return const SizedBox(height: 15);
+        return const Divider();
       },
     );
   }

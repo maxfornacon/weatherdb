@@ -2,6 +2,7 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:weather/services/authentication_service.dart';
 import 'package:weather/services/grocery_service.dart';
+import 'package:weather/services/image_service.dart';
 import 'package:weather/services/local_storage_service.dart';
 import 'package:weather/services/post_service.dart';
 import 'package:weather/services/product_service.dart';
@@ -40,6 +41,7 @@ import 'package:weather/ui/views/startup/startup_view.dart';
     LazySingleton(classType: ProductService),
 
     LazySingleton(classType: PostService),
+    LazySingleton(classType: ImageService),
   ],
 )
 class AppSetup {}

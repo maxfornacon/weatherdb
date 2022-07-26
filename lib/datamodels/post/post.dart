@@ -87,6 +87,18 @@ class AppImage with _$AppImage {
 }
 
 @freezed
+class AppImageDto with _$AppImageDto {
+  const factory AppImageDto({
+    @JsonKey(name: 'created_at') required DateTime createdAt,
+    required String title,
+    @JsonKey(name: 'storage_path') required String url,
+    @JsonKey(name: 'post_id') required int postId,
+  }) = _AppImageDto;
+
+  factory AppImageDto.fromJson(Map<String, dynamic> json) => _$AppImageDtoFromJson(json);
+}
+
+@freezed
 class Liked with _$Liked {
   const factory Liked({
     @JsonKey(name: 'liked_by') required String userId,

@@ -55,6 +55,22 @@ Map<String, dynamic> _$$_AppImageToJson(_$_AppImage instance) =>
       'post_id': instance.postId,
     };
 
+_$_AppImageDto _$$_AppImageDtoFromJson(Map<String, dynamic> json) =>
+    _$_AppImageDto(
+      createdAt: DateTime.parse(json['created_at'] as String),
+      title: json['title'] as String,
+      url: json['storage_path'] as String,
+      postId: json['post_id'] as int,
+    );
+
+Map<String, dynamic> _$$_AppImageDtoToJson(_$_AppImageDto instance) =>
+    <String, dynamic>{
+      'created_at': instance.createdAt.toIso8601String(),
+      'title': instance.title,
+      'storage_path': instance.url,
+      'post_id': instance.postId,
+    };
+
 _$_Liked _$$_LikedFromJson(Map<String, dynamic> json) => _$_Liked(
       userId: json['liked_by'] as String,
       postId: json['liked_post'] as int,

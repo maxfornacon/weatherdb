@@ -659,6 +659,215 @@ abstract class _AppImage implements AppImage {
       throw _privateConstructorUsedError;
 }
 
+AppImageDto _$AppImageDtoFromJson(Map<String, dynamic> json) {
+  return _AppImageDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AppImageDto {
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  @JsonKey(name: 'storage_path')
+  String get url => throw _privateConstructorUsedError;
+  @JsonKey(name: 'post_id')
+  int get postId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AppImageDtoCopyWith<AppImageDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AppImageDtoCopyWith<$Res> {
+  factory $AppImageDtoCopyWith(
+          AppImageDto value, $Res Function(AppImageDto) then) =
+      _$AppImageDtoCopyWithImpl<$Res>;
+  $Res call(
+      {@JsonKey(name: 'created_at') DateTime createdAt,
+      String title,
+      @JsonKey(name: 'storage_path') String url,
+      @JsonKey(name: 'post_id') int postId});
+}
+
+/// @nodoc
+class _$AppImageDtoCopyWithImpl<$Res> implements $AppImageDtoCopyWith<$Res> {
+  _$AppImageDtoCopyWithImpl(this._value, this._then);
+
+  final AppImageDto _value;
+  // ignore: unused_field
+  final $Res Function(AppImageDto) _then;
+
+  @override
+  $Res call({
+    Object? createdAt = freezed,
+    Object? title = freezed,
+    Object? url = freezed,
+    Object? postId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      postId: postId == freezed
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_AppImageDtoCopyWith<$Res>
+    implements $AppImageDtoCopyWith<$Res> {
+  factory _$$_AppImageDtoCopyWith(
+          _$_AppImageDto value, $Res Function(_$_AppImageDto) then) =
+      __$$_AppImageDtoCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {@JsonKey(name: 'created_at') DateTime createdAt,
+      String title,
+      @JsonKey(name: 'storage_path') String url,
+      @JsonKey(name: 'post_id') int postId});
+}
+
+/// @nodoc
+class __$$_AppImageDtoCopyWithImpl<$Res> extends _$AppImageDtoCopyWithImpl<$Res>
+    implements _$$_AppImageDtoCopyWith<$Res> {
+  __$$_AppImageDtoCopyWithImpl(
+      _$_AppImageDto _value, $Res Function(_$_AppImageDto) _then)
+      : super(_value, (v) => _then(v as _$_AppImageDto));
+
+  @override
+  _$_AppImageDto get _value => super._value as _$_AppImageDto;
+
+  @override
+  $Res call({
+    Object? createdAt = freezed,
+    Object? title = freezed,
+    Object? url = freezed,
+    Object? postId = freezed,
+  }) {
+    return _then(_$_AppImageDto(
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      postId: postId == freezed
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_AppImageDto implements _AppImageDto {
+  const _$_AppImageDto(
+      {@JsonKey(name: 'created_at') required this.createdAt,
+      required this.title,
+      @JsonKey(name: 'storage_path') required this.url,
+      @JsonKey(name: 'post_id') required this.postId});
+
+  factory _$_AppImageDto.fromJson(Map<String, dynamic> json) =>
+      _$$_AppImageDtoFromJson(json);
+
+  @override
+  @JsonKey(name: 'created_at')
+  final DateTime createdAt;
+  @override
+  final String title;
+  @override
+  @JsonKey(name: 'storage_path')
+  final String url;
+  @override
+  @JsonKey(name: 'post_id')
+  final int postId;
+
+  @override
+  String toString() {
+    return 'AppImageDto(createdAt: $createdAt, title: $title, url: $url, postId: $postId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AppImageDto &&
+            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality().equals(other.url, url) &&
+            const DeepCollectionEquality().equals(other.postId, postId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(createdAt),
+      const DeepCollectionEquality().hash(title),
+      const DeepCollectionEquality().hash(url),
+      const DeepCollectionEquality().hash(postId));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_AppImageDtoCopyWith<_$_AppImageDto> get copyWith =>
+      __$$_AppImageDtoCopyWithImpl<_$_AppImageDto>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_AppImageDtoToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AppImageDto implements AppImageDto {
+  const factory _AppImageDto(
+      {@JsonKey(name: 'created_at') required final DateTime createdAt,
+      required final String title,
+      @JsonKey(name: 'storage_path') required final String url,
+      @JsonKey(name: 'post_id') required final int postId}) = _$_AppImageDto;
+
+  factory _AppImageDto.fromJson(Map<String, dynamic> json) =
+      _$_AppImageDto.fromJson;
+
+  @override
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt;
+  @override
+  String get title;
+  @override
+  @JsonKey(name: 'storage_path')
+  String get url;
+  @override
+  @JsonKey(name: 'post_id')
+  int get postId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AppImageDtoCopyWith<_$_AppImageDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 Liked _$LikedFromJson(Map<String, dynamic> json) {
   return _Liked.fromJson(json);
 }

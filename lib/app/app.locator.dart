@@ -11,6 +11,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../services/authentication_service.dart';
 import '../services/grocery_service.dart';
+import '../services/image_service.dart';
 import '../services/local_storage_service.dart';
 import '../services/post_service.dart';
 import '../services/product_service.dart';
@@ -33,4 +34,5 @@ Future<void> setupLocator(
   locator.registerLazySingleton(() => GroceryService());
   locator.registerLazySingleton(() => ProductService());
   locator.registerLazySingleton(() => PostService());
+  locator.registerLazySingleton(() => ImageService());
 }
