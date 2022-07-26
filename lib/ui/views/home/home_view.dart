@@ -253,11 +253,20 @@ class _Body extends StatelessWidget {
                               });
                             }
                           },
-                          child: postIsLiked ? const Icon(Icons.favorite) : const Icon(Icons.favorite_border)
+                          child: Row(
+                            children: [
+                              postIsLiked
+                                  ? Icon(
+                                      Icons.favorite,
+                                      color: Theme.of(context).primaryColor,
+                                  ) : const Icon(Icons.favorite_border),
+                              const SizedBox(width: 10),
+                              AppBoldText('$likeCount likes'),
+                            ],
+                          )
                         ),
                       ),
                       const SizedBox(height: 5),
-                      AppBoldText('$likeCount likes'),
                       ExpandableText(
                         item.text,
                         expandText: 'show more',
