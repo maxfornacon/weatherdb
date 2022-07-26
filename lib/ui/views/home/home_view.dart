@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:weather/datamodels/application_models.dart';
 import 'package:weather/datamodels/post/post.dart';
 import 'package:weather/ui/widgets/dumb_widgets/app_bold_text.dart';
-import 'package:weather/ui/widgets/dumb_widgets/app_button.dart';
 import 'package:weather/ui/widgets/dumb_widgets/app_padding.dart';
-import 'package:weather/ui/widgets/dumb_widgets/supabase_logo.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'home_viewmodel.dart';
 
@@ -100,6 +96,9 @@ class _Body extends StatelessWidget {
       itemBuilder: (context, index) {
         Post item = viewModel.data![index];
 
+        bool postIsLiked = viewModel.isLiked(item);
+        int likeCount = item.likes!.length;
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -129,14 +128,38 @@ class _Body extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Icon(Icons.favorite_border),
-                  const SizedBox(height: 5),
-                  AppBoldText('${item.likes!.length} likes'),
-                  Text(item.text),
-                ],
+              child: StatefulBuilder(
+                builder: (context, StateSetter setLikedState) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: () async {
+                            if (postIsLiked) {
+                              await viewModel.unlikePost(item);
+                              setLikedState(() {
+                                postIsLiked = false;
+                                likeCount--;
+                              });
+                            } else {
+                              await viewModel.likePost(item);
+                              setLikedState(() {
+                                postIsLiked = true;
+                                likeCount++;
+                              });
+                            }
+                          },
+                          child: postIsLiked ? const Icon(Icons.favorite) : const Icon(Icons.favorite_border)
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      AppBoldText('$likeCount likes'),
+                      Text(item.text),
+                    ],
+                  );
+                }
               ),
             ),
           ],

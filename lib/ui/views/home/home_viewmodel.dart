@@ -1,6 +1,7 @@
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:supabase/supabase.dart';
 import 'package:weather/app/app.locator.dart';
 import 'package:weather/app/app.router.dart';
 import 'package:weather/datamodels/application_models.dart';
@@ -32,7 +33,6 @@ class HomeViewModel extends FutureViewModel<List<Post>> {
 
   Future<List<Post>> _fetchPosts() async {
     final response = await _postService.fetchPostsDesc();
-    print(response.toJson());
 
     if (response.error != null) {
       return [];
@@ -40,6 +40,24 @@ class HomeViewModel extends FutureViewModel<List<Post>> {
 
     final list = response.data as List;
     return list.map((e) => Post.fromJson(e)).toList();
+  }
+
+  bool isLiked(Post post) {
+
+    for (Liked liked in post.likes!) {
+      if (liked.userId == user!.uid) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  Future<void> likePost(Post post) async {
+    await _postService.likePost(postId: post.pid, userId: user!.uid);
+  }
+
+  Future<void> unlikePost(Post post) async {
+    await _postService.unlikePost(postId: post.pid, userId: user!.uid);
   }
 
   Future<AppUser?> getUser(String id) async {
