@@ -32,6 +32,9 @@ mixin _$Post {
   double get humidity => throw _privateConstructorUsedError;
   @JsonKey(name: 'users')
   AppUser get postedBy => throw _privateConstructorUsedError;
+  @JsonKey(
+      name: 'liked', fromJson: Post._usersFromJson, toJson: Post._usersToJson)
+  List<Liked>? get likes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,13 +48,18 @@ abstract class $PostCopyWith<$Res> {
   $Res call(
       {int pid,
       String text,
-      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'created_at')
+          DateTime createdAt,
       double longitude,
       double latitude,
       double temperature,
-      @JsonKey(name: 'air_pressure') double airPressure,
+      @JsonKey(name: 'air_pressure')
+          double airPressure,
       double humidity,
-      @JsonKey(name: 'users') AppUser postedBy});
+      @JsonKey(name: 'users')
+          AppUser postedBy,
+      @JsonKey(name: 'liked', fromJson: Post._usersFromJson, toJson: Post._usersToJson)
+          List<Liked>? likes});
 
   $AppUserCopyWith<$Res> get postedBy;
 }
@@ -75,6 +83,7 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
     Object? airPressure = freezed,
     Object? humidity = freezed,
     Object? postedBy = freezed,
+    Object? likes = freezed,
   }) {
     return _then(_value.copyWith(
       pid: pid == freezed
@@ -113,6 +122,10 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
           ? _value.postedBy
           : postedBy // ignore: cast_nullable_to_non_nullable
               as AppUser,
+      likes: likes == freezed
+          ? _value.likes
+          : likes // ignore: cast_nullable_to_non_nullable
+              as List<Liked>?,
     ));
   }
 
@@ -132,13 +145,18 @@ abstract class _$$_PostCopyWith<$Res> implements $PostCopyWith<$Res> {
   $Res call(
       {int pid,
       String text,
-      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'created_at')
+          DateTime createdAt,
       double longitude,
       double latitude,
       double temperature,
-      @JsonKey(name: 'air_pressure') double airPressure,
+      @JsonKey(name: 'air_pressure')
+          double airPressure,
       double humidity,
-      @JsonKey(name: 'users') AppUser postedBy});
+      @JsonKey(name: 'users')
+          AppUser postedBy,
+      @JsonKey(name: 'liked', fromJson: Post._usersFromJson, toJson: Post._usersToJson)
+          List<Liked>? likes});
 
   @override
   $AppUserCopyWith<$Res> get postedBy;
@@ -164,6 +182,7 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
     Object? airPressure = freezed,
     Object? humidity = freezed,
     Object? postedBy = freezed,
+    Object? likes = freezed,
   }) {
     return _then(_$_Post(
       pid: pid == freezed
@@ -202,6 +221,10 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
           ? _value.postedBy
           : postedBy // ignore: cast_nullable_to_non_nullable
               as AppUser,
+      likes: likes == freezed
+          ? _value._likes
+          : likes // ignore: cast_nullable_to_non_nullable
+              as List<Liked>?,
     ));
   }
 }
@@ -212,13 +235,19 @@ class _$_Post implements _Post {
   const _$_Post(
       {required this.pid,
       required this.text,
-      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'created_at')
+          required this.createdAt,
       required this.longitude,
       required this.latitude,
       required this.temperature,
-      @JsonKey(name: 'air_pressure') required this.airPressure,
+      @JsonKey(name: 'air_pressure')
+          required this.airPressure,
       required this.humidity,
-      @JsonKey(name: 'users') required this.postedBy});
+      @JsonKey(name: 'users')
+          required this.postedBy,
+      @JsonKey(name: 'liked', fromJson: Post._usersFromJson, toJson: Post._usersToJson)
+          final List<Liked>? likes = const []})
+      : _likes = likes;
 
   factory _$_Post.fromJson(Map<String, dynamic> json) => _$$_PostFromJson(json);
 
@@ -243,10 +272,20 @@ class _$_Post implements _Post {
   @override
   @JsonKey(name: 'users')
   final AppUser postedBy;
+  final List<Liked>? _likes;
+  @override
+  @JsonKey(
+      name: 'liked', fromJson: Post._usersFromJson, toJson: Post._usersToJson)
+  List<Liked>? get likes {
+    final value = _likes;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'Post(pid: $pid, text: $text, createdAt: $createdAt, longitude: $longitude, latitude: $latitude, temperature: $temperature, airPressure: $airPressure, humidity: $humidity, postedBy: $postedBy)';
+    return 'Post(pid: $pid, text: $text, createdAt: $createdAt, longitude: $longitude, latitude: $latitude, temperature: $temperature, airPressure: $airPressure, humidity: $humidity, postedBy: $postedBy, likes: $likes)';
   }
 
   @override
@@ -264,7 +303,8 @@ class _$_Post implements _Post {
             const DeepCollectionEquality()
                 .equals(other.airPressure, airPressure) &&
             const DeepCollectionEquality().equals(other.humidity, humidity) &&
-            const DeepCollectionEquality().equals(other.postedBy, postedBy));
+            const DeepCollectionEquality().equals(other.postedBy, postedBy) &&
+            const DeepCollectionEquality().equals(other._likes, _likes));
   }
 
   @JsonKey(ignore: true)
@@ -279,7 +319,8 @@ class _$_Post implements _Post {
       const DeepCollectionEquality().hash(temperature),
       const DeepCollectionEquality().hash(airPressure),
       const DeepCollectionEquality().hash(humidity),
-      const DeepCollectionEquality().hash(postedBy));
+      const DeepCollectionEquality().hash(postedBy),
+      const DeepCollectionEquality().hash(_likes));
 
   @JsonKey(ignore: true)
   @override
@@ -298,13 +339,18 @@ abstract class _Post implements Post {
   const factory _Post(
       {required final int pid,
       required final String text,
-      @JsonKey(name: 'created_at') required final DateTime createdAt,
+      @JsonKey(name: 'created_at')
+          required final DateTime createdAt,
       required final double longitude,
       required final double latitude,
       required final double temperature,
-      @JsonKey(name: 'air_pressure') required final double airPressure,
+      @JsonKey(name: 'air_pressure')
+          required final double airPressure,
       required final double humidity,
-      @JsonKey(name: 'users') required final AppUser postedBy}) = _$_Post;
+      @JsonKey(name: 'users')
+          required final AppUser postedBy,
+      @JsonKey(name: 'liked', fromJson: Post._usersFromJson, toJson: Post._usersToJson)
+          final List<Liked>? likes}) = _$_Post;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$_Post.fromJson;
 
@@ -330,6 +376,208 @@ abstract class _Post implements Post {
   @JsonKey(name: 'users')
   AppUser get postedBy;
   @override
+  @JsonKey(
+      name: 'liked', fromJson: Post._usersFromJson, toJson: Post._usersToJson)
+  List<Liked>? get likes;
+  @override
   @JsonKey(ignore: true)
   _$$_PostCopyWith<_$_Post> get copyWith => throw _privateConstructorUsedError;
+}
+
+Liked _$LikedFromJson(Map<String, dynamic> json) {
+  return _Liked.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Liked {
+  @JsonKey(name: 'liked_by')
+  String get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'liked_post')
+  int get postId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'users')
+  AppUser? get user => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $LikedCopyWith<Liked> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LikedCopyWith<$Res> {
+  factory $LikedCopyWith(Liked value, $Res Function(Liked) then) =
+      _$LikedCopyWithImpl<$Res>;
+  $Res call(
+      {@JsonKey(name: 'liked_by') String userId,
+      @JsonKey(name: 'liked_post') int postId,
+      @JsonKey(name: 'users') AppUser? user});
+
+  $AppUserCopyWith<$Res>? get user;
+}
+
+/// @nodoc
+class _$LikedCopyWithImpl<$Res> implements $LikedCopyWith<$Res> {
+  _$LikedCopyWithImpl(this._value, this._then);
+
+  final Liked _value;
+  // ignore: unused_field
+  final $Res Function(Liked) _then;
+
+  @override
+  $Res call({
+    Object? userId = freezed,
+    Object? postId = freezed,
+    Object? user = freezed,
+  }) {
+    return _then(_value.copyWith(
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      postId: postId == freezed
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as int,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as AppUser?,
+    ));
+  }
+
+  @override
+  $AppUserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $AppUserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value));
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_LikedCopyWith<$Res> implements $LikedCopyWith<$Res> {
+  factory _$$_LikedCopyWith(_$_Liked value, $Res Function(_$_Liked) then) =
+      __$$_LikedCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {@JsonKey(name: 'liked_by') String userId,
+      @JsonKey(name: 'liked_post') int postId,
+      @JsonKey(name: 'users') AppUser? user});
+
+  @override
+  $AppUserCopyWith<$Res>? get user;
+}
+
+/// @nodoc
+class __$$_LikedCopyWithImpl<$Res> extends _$LikedCopyWithImpl<$Res>
+    implements _$$_LikedCopyWith<$Res> {
+  __$$_LikedCopyWithImpl(_$_Liked _value, $Res Function(_$_Liked) _then)
+      : super(_value, (v) => _then(v as _$_Liked));
+
+  @override
+  _$_Liked get _value => super._value as _$_Liked;
+
+  @override
+  $Res call({
+    Object? userId = freezed,
+    Object? postId = freezed,
+    Object? user = freezed,
+  }) {
+    return _then(_$_Liked(
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      postId: postId == freezed
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as int,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as AppUser?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_Liked implements _Liked {
+  const _$_Liked(
+      {@JsonKey(name: 'liked_by') required this.userId,
+      @JsonKey(name: 'liked_post') required this.postId,
+      @JsonKey(name: 'users') this.user});
+
+  factory _$_Liked.fromJson(Map<String, dynamic> json) =>
+      _$$_LikedFromJson(json);
+
+  @override
+  @JsonKey(name: 'liked_by')
+  final String userId;
+  @override
+  @JsonKey(name: 'liked_post')
+  final int postId;
+  @override
+  @JsonKey(name: 'users')
+  final AppUser? user;
+
+  @override
+  String toString() {
+    return 'Liked(userId: $userId, postId: $postId, user: $user)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Liked &&
+            const DeepCollectionEquality().equals(other.userId, userId) &&
+            const DeepCollectionEquality().equals(other.postId, postId) &&
+            const DeepCollectionEquality().equals(other.user, user));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(userId),
+      const DeepCollectionEquality().hash(postId),
+      const DeepCollectionEquality().hash(user));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_LikedCopyWith<_$_Liked> get copyWith =>
+      __$$_LikedCopyWithImpl<_$_Liked>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_LikedToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Liked implements Liked {
+  const factory _Liked(
+      {@JsonKey(name: 'liked_by') required final String userId,
+      @JsonKey(name: 'liked_post') required final int postId,
+      @JsonKey(name: 'users') final AppUser? user}) = _$_Liked;
+
+  factory _Liked.fromJson(Map<String, dynamic> json) = _$_Liked.fromJson;
+
+  @override
+  @JsonKey(name: 'liked_by')
+  String get userId;
+  @override
+  @JsonKey(name: 'liked_post')
+  int get postId;
+  @override
+  @JsonKey(name: 'users')
+  AppUser? get user;
+  @override
+  @JsonKey(ignore: true)
+  _$$_LikedCopyWith<_$_Liked> get copyWith =>
+      throw _privateConstructorUsedError;
 }

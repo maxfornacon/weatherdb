@@ -12,7 +12,7 @@ class PostService extends SupabaseService<Post> {
   Future<PostgrestResponse> fetchPostsDesc() async {
     return await supabase
         .from("posts")
-        .select("*, users!posts_posted_by_fkey(*)")
+        .select("*, users!posts_posted_by_fkey(*), liked(*, users(*))")
         .order('created_at', ascending: false)
         .execute();
   }

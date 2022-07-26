@@ -134,7 +134,7 @@ class _Body extends StatelessWidget {
                 children: [
                   const Icon(Icons.favorite_border),
                   const SizedBox(height: 5),
-                  const AppBoldText('23 likes'),
+                  AppBoldText('${item.likes!.length} likes'),
                   Text(item.text),
                 ],
               ),

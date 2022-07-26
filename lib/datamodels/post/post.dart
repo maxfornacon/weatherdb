@@ -19,15 +19,44 @@ class Post with _$Post {
       name: 'users',
     ) required AppUser postedBy,
 
-
-  //   @Default([])
-  //   @JsonKey(
-  //     name: 'liked_by',
-  //     fromJson: Post._productsFromJson,
-  //     toJson: Post._productsToJson,
-  //   )
+    @Default([])
+    @JsonKey(
+      name: 'liked',
+      fromJson: Post._usersFromJson,
+      toJson: Post._usersToJson,
+    )
+    List<Liked>? likes,
   }) = _Post;
 
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
+
+  static List<Liked>? _usersFromJson(List<dynamic>? list) {
+    if (list == null) {
+      return [];
+    }
+
+    return list.map((e) => Liked.fromJson(e)).toList();
+  }
+
+  static List<Map<String, dynamic>>? _usersToJson(
+      List<Liked>? list) {
+    if (list == null) {
+      return [];
+    }
+
+    return list.map((e) => e.toJson()).toList();
+  }
+}
+
+@freezed
+class Liked with _$Liked {
+  const factory Liked({
+    @JsonKey(name: 'liked_by') required String userId,
+    @JsonKey(name: 'liked_post') required int postId,
+    @JsonKey(name: 'users') AppUser? user,
+  }) = _Liked;
+
+  factory Liked.fromJson(Map<String, dynamic> json) =>
+      _$LikedFromJson(json);
 }
 
