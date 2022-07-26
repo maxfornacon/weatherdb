@@ -17,6 +17,7 @@ import '../ui/views/create_product/create_product_view.dart';
 import '../ui/views/grocery_detail/grocery_detail_view.dart';
 import '../ui/views/home/home_view.dart';
 import '../ui/views/product_selection/product_selection_view.dart';
+import '../ui/views/search/search_view.dart';
 import '../ui/views/sign_in/sign_in_view.dart';
 import '../ui/views/sign_up/sign_up_view.dart';
 import '../ui/views/startup/startup_view.dart';
@@ -31,6 +32,7 @@ class Routes {
   static const String groceryDetailView = '/grocery-detail-view';
   static const String productSelectionView = '/product-selection-view';
   static const String createPostView = '/create-post-view';
+  static const String searchView = '/search-view';
   static const all = <String>{
     startupView,
     homeView,
@@ -41,6 +43,7 @@ class Routes {
     groceryDetailView,
     productSelectionView,
     createPostView,
+    searchView,
   };
 }
 
@@ -57,6 +60,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.groceryDetailView, page: GroceryDetailView),
     RouteDef(Routes.productSelectionView, page: ProductSelectionView),
     RouteDef(Routes.createPostView, page: CreatePostView),
+    RouteDef(Routes.searchView, page: SearchView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -120,6 +124,12 @@ class StackedRouter extends RouterBase {
     CreatePostView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => CreatePostView(),
+        settings: data,
+      );
+    },
+    SearchView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const SearchView(),
         settings: data,
       );
     },
@@ -292,6 +302,22 @@ extension NavigatorStateExtension on NavigationService {
   }) async {
     return navigateTo(
       Routes.createPostView,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToSearchView({
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.searchView,
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

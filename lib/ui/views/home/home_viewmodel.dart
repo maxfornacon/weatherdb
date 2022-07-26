@@ -83,6 +83,11 @@ class HomeViewModel extends FutureViewModel<List<Post>> {
   //   _navigationService.navigateTo(Routes.createGroceryView);
   // }
 
+
+  void toSearchView() {
+    _navigationService.navigateTo(Routes.searchView);
+  }
+
   void toGroceryDetailView({required String id}) {
     _navigationService.navigateTo(
       Routes.groceryDetailView,

@@ -12,6 +12,7 @@ import 'package:weather/ui/views/create_product/create_product_view.dart';
 import 'package:weather/ui/views/grocery_detail/grocery_detail_view.dart';
 import 'package:weather/ui/views/home/home_view.dart';
 import 'package:weather/ui/views/product_selection/product_selection_view.dart';
+import 'package:weather/ui/views/search/search_view.dart';
 import 'package:weather/ui/views/sign_in/sign_in_view.dart';
 import 'package:weather/ui/views/sign_up/sign_up_view.dart';
 import 'package:weather/ui/views/startup/startup_view.dart';
@@ -27,8 +28,10 @@ import 'package:weather/ui/views/startup/startup_view.dart';
     CupertinoRoute(page: CreateProductView),
     CupertinoRoute(page: GroceryDetailView),
     CupertinoRoute(page: ProductSelectionView),
+    
 
     MaterialRoute(page: CreatePostView),
+    MaterialRoute(page: SearchView)
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),

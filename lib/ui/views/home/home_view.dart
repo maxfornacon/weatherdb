@@ -27,6 +27,12 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Weathr'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: viewModel.toSearchView,
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: viewModel.toCreatePostView,
