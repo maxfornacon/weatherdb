@@ -1,4 +1,6 @@
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:stacked/stacked.dart';
 import 'package:weather/datamodels/post/post.dart';
 import 'package:weather/ui/widgets/dumb_widgets/app_bold_text.dart';
@@ -68,16 +70,16 @@ class _Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30),
-            AppHPadding(
-              child: Text(
-                'Welcome back ${viewModel.user!.username}',
-                style: const TextStyle(
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
+            // const SizedBox(height: 30),
+            // AppHPadding(
+            //   child: Text(
+            //     'Welcome back ${viewModel.user!.username}',
+            //     style: const TextStyle(
+            //       fontSize: 24,
+            //     ),
+            //   ),
+            // ),
+            const SizedBox(height: 15),
             if (viewModel.data!.isEmpty)
               AppHPadding(child: const _NoData())
             else
@@ -98,6 +100,103 @@ class _Body extends StatelessWidget {
 
         bool postIsLiked = viewModel.isLiked(item);
         int likeCount = item.likes!.length;
+
+        List<Widget> images = [];
+
+        images.add(Container(
+          color: const Color(0xFFF1F1F1),
+          child: Center(
+            child: Table(
+              columnWidths: const {
+                0: FlexColumnWidth(1.0),
+                1: FixedColumnWidth(10.0),
+                2: FlexColumnWidth(1.0),
+              },
+              children: [
+                TableRow(
+                  children: [
+                    const TableCell(
+                      child: Text(
+                        'Temperature:',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0
+                        ),
+                      )
+                    ),
+                    TableCell(child: Container()),
+                    TableCell(
+                      child: Text(
+                        '${item.temperature}°C',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 20.0
+                        ),
+                      )
+                    )
+                  ]
+                ),
+
+                TableRow(
+                  children: [
+                    const TableCell(
+                      child: Text(
+                        'Air pressure:',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.0
+                        ),
+                      )
+                    ),
+                    TableCell(child: Container()),
+                    TableCell(
+                      child: Text(
+                        '${item.airPressure} hPa',
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 20.0
+                        ),
+                      )
+                    )
+                  ]
+                ),
+                TableRow(
+                  children: [
+                    const TableCell(
+                      child: Text(
+                        'Humidity:',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.0
+                        ),
+                      )
+                    ),
+                    TableCell(child: Container()),
+                    TableCell(
+                      child: Text(
+                        '${item.humidity}%',
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 20.0
+                        ),
+                      )
+                    )
+                  ]
+                ),
+              ],
+            ),
+          ),
+        ));
+
+        for (AppImage image in item.images!) {
+          images.add(Image.network(
+            image.url,
+            fit: BoxFit.cover,
+          ));
+        }
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,9 +221,12 @@ class _Body extends StatelessWidget {
                 ],
               )
             ),
-            const Placeholder(
-              fallbackHeight: 350,
-              fallbackWidth: 100,
+            ImageSlideshow(
+              isLoop: true,
+              height: 300,
+              indicatorColor: Theme.of(context).primaryColor,
+              initialPage: 1,
+              children: images,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -156,7 +258,12 @@ class _Body extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       AppBoldText('$likeCount likes'),
-                      Text(item.text),
+                      ExpandableText(
+                        item.text,
+                        expandText: 'show more',
+                        collapseText: 'show less',
+                        maxLines: 4,
+                      ),
                     ],
                   );
                 }
@@ -164,23 +271,6 @@ class _Body extends StatelessWidget {
             ),
           ],
         );
-        // return AppHPadding(
-        //   child: ListTile(
-        //     title: Text(item.name),
-        //     subtitle: const Text('Grocery List'),
-        //     isThreeLine: true,
-        //     trailing: viewModel.busy(item.pid)
-        //         ? const CircularProgressIndicator()
-        //         : const SizedBox.shrink(),
-        //     shape: RoundedRectangleBorder(
-        //       borderRadius: BorderRadius.circular(5),
-        //     ),
-        //     onTap: () => viewModel.toGroceryDetailView(
-        //       id: item.id,
-        //     ),
-        //     onLongPress: () => viewModel.onLongPressedGroceryList(item.id),
-        //   ),
-        // );
       },
       separatorBuilder: (BuildContext context, int index) {
         return const SizedBox(height: 15);

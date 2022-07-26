@@ -30,6 +30,11 @@ mixin _$Post {
   @JsonKey(name: 'air_pressure')
   double get airPressure => throw _privateConstructorUsedError;
   double get humidity => throw _privateConstructorUsedError;
+  @JsonKey(
+      name: 'images',
+      fromJson: Post._imagesFromJson,
+      toJson: Post._imagesToJson)
+  List<AppImage>? get images => throw _privateConstructorUsedError;
   @JsonKey(name: 'users')
   AppUser get postedBy => throw _privateConstructorUsedError;
   @JsonKey(
@@ -56,6 +61,8 @@ abstract class $PostCopyWith<$Res> {
       @JsonKey(name: 'air_pressure')
           double airPressure,
       double humidity,
+      @JsonKey(name: 'images', fromJson: Post._imagesFromJson, toJson: Post._imagesToJson)
+          List<AppImage>? images,
       @JsonKey(name: 'users')
           AppUser postedBy,
       @JsonKey(name: 'liked', fromJson: Post._usersFromJson, toJson: Post._usersToJson)
@@ -82,6 +89,7 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
     Object? temperature = freezed,
     Object? airPressure = freezed,
     Object? humidity = freezed,
+    Object? images = freezed,
     Object? postedBy = freezed,
     Object? likes = freezed,
   }) {
@@ -118,6 +126,10 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
           ? _value.humidity
           : humidity // ignore: cast_nullable_to_non_nullable
               as double,
+      images: images == freezed
+          ? _value.images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<AppImage>?,
       postedBy: postedBy == freezed
           ? _value.postedBy
           : postedBy // ignore: cast_nullable_to_non_nullable
@@ -153,6 +165,8 @@ abstract class _$$_PostCopyWith<$Res> implements $PostCopyWith<$Res> {
       @JsonKey(name: 'air_pressure')
           double airPressure,
       double humidity,
+      @JsonKey(name: 'images', fromJson: Post._imagesFromJson, toJson: Post._imagesToJson)
+          List<AppImage>? images,
       @JsonKey(name: 'users')
           AppUser postedBy,
       @JsonKey(name: 'liked', fromJson: Post._usersFromJson, toJson: Post._usersToJson)
@@ -181,6 +195,7 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
     Object? temperature = freezed,
     Object? airPressure = freezed,
     Object? humidity = freezed,
+    Object? images = freezed,
     Object? postedBy = freezed,
     Object? likes = freezed,
   }) {
@@ -217,6 +232,10 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
           ? _value.humidity
           : humidity // ignore: cast_nullable_to_non_nullable
               as double,
+      images: images == freezed
+          ? _value._images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<AppImage>?,
       postedBy: postedBy == freezed
           ? _value.postedBy
           : postedBy // ignore: cast_nullable_to_non_nullable
@@ -243,11 +262,14 @@ class _$_Post implements _Post {
       @JsonKey(name: 'air_pressure')
           required this.airPressure,
       required this.humidity,
+      @JsonKey(name: 'images', fromJson: Post._imagesFromJson, toJson: Post._imagesToJson)
+          final List<AppImage>? images = const [],
       @JsonKey(name: 'users')
           required this.postedBy,
       @JsonKey(name: 'liked', fromJson: Post._usersFromJson, toJson: Post._usersToJson)
           final List<Liked>? likes = const []})
-      : _likes = likes;
+      : _images = images,
+        _likes = likes;
 
   factory _$_Post.fromJson(Map<String, dynamic> json) => _$$_PostFromJson(json);
 
@@ -269,6 +291,19 @@ class _$_Post implements _Post {
   final double airPressure;
   @override
   final double humidity;
+  final List<AppImage>? _images;
+  @override
+  @JsonKey(
+      name: 'images',
+      fromJson: Post._imagesFromJson,
+      toJson: Post._imagesToJson)
+  List<AppImage>? get images {
+    final value = _images;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: 'users')
   final AppUser postedBy;
@@ -285,7 +320,7 @@ class _$_Post implements _Post {
 
   @override
   String toString() {
-    return 'Post(pid: $pid, text: $text, createdAt: $createdAt, longitude: $longitude, latitude: $latitude, temperature: $temperature, airPressure: $airPressure, humidity: $humidity, postedBy: $postedBy, likes: $likes)';
+    return 'Post(pid: $pid, text: $text, createdAt: $createdAt, longitude: $longitude, latitude: $latitude, temperature: $temperature, airPressure: $airPressure, humidity: $humidity, images: $images, postedBy: $postedBy, likes: $likes)';
   }
 
   @override
@@ -303,6 +338,7 @@ class _$_Post implements _Post {
             const DeepCollectionEquality()
                 .equals(other.airPressure, airPressure) &&
             const DeepCollectionEquality().equals(other.humidity, humidity) &&
+            const DeepCollectionEquality().equals(other._images, _images) &&
             const DeepCollectionEquality().equals(other.postedBy, postedBy) &&
             const DeepCollectionEquality().equals(other._likes, _likes));
   }
@@ -319,6 +355,7 @@ class _$_Post implements _Post {
       const DeepCollectionEquality().hash(temperature),
       const DeepCollectionEquality().hash(airPressure),
       const DeepCollectionEquality().hash(humidity),
+      const DeepCollectionEquality().hash(_images),
       const DeepCollectionEquality().hash(postedBy),
       const DeepCollectionEquality().hash(_likes));
 
@@ -347,6 +384,8 @@ abstract class _Post implements Post {
       @JsonKey(name: 'air_pressure')
           required final double airPressure,
       required final double humidity,
+      @JsonKey(name: 'images', fromJson: Post._imagesFromJson, toJson: Post._imagesToJson)
+          final List<AppImage>? images,
       @JsonKey(name: 'users')
           required final AppUser postedBy,
       @JsonKey(name: 'liked', fromJson: Post._usersFromJson, toJson: Post._usersToJson)
@@ -373,6 +412,12 @@ abstract class _Post implements Post {
   @override
   double get humidity;
   @override
+  @JsonKey(
+      name: 'images',
+      fromJson: Post._imagesFromJson,
+      toJson: Post._imagesToJson)
+  List<AppImage>? get images;
+  @override
   @JsonKey(name: 'users')
   AppUser get postedBy;
   @override
@@ -382,6 +427,236 @@ abstract class _Post implements Post {
   @override
   @JsonKey(ignore: true)
   _$$_PostCopyWith<_$_Post> get copyWith => throw _privateConstructorUsedError;
+}
+
+AppImage _$AppImageFromJson(Map<String, dynamic> json) {
+  return _AppImage.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AppImage {
+  @JsonKey(name: 'iid')
+  int get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  @JsonKey(name: 'storage_path')
+  String get url => throw _privateConstructorUsedError;
+  @JsonKey(name: 'post_id')
+  int get postId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AppImageCopyWith<AppImage> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AppImageCopyWith<$Res> {
+  factory $AppImageCopyWith(AppImage value, $Res Function(AppImage) then) =
+      _$AppImageCopyWithImpl<$Res>;
+  $Res call(
+      {@JsonKey(name: 'iid') int id,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      String title,
+      @JsonKey(name: 'storage_path') String url,
+      @JsonKey(name: 'post_id') int postId});
+}
+
+/// @nodoc
+class _$AppImageCopyWithImpl<$Res> implements $AppImageCopyWith<$Res> {
+  _$AppImageCopyWithImpl(this._value, this._then);
+
+  final AppImage _value;
+  // ignore: unused_field
+  final $Res Function(AppImage) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? createdAt = freezed,
+    Object? title = freezed,
+    Object? url = freezed,
+    Object? postId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      postId: postId == freezed
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_AppImageCopyWith<$Res> implements $AppImageCopyWith<$Res> {
+  factory _$$_AppImageCopyWith(
+          _$_AppImage value, $Res Function(_$_AppImage) then) =
+      __$$_AppImageCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {@JsonKey(name: 'iid') int id,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      String title,
+      @JsonKey(name: 'storage_path') String url,
+      @JsonKey(name: 'post_id') int postId});
+}
+
+/// @nodoc
+class __$$_AppImageCopyWithImpl<$Res> extends _$AppImageCopyWithImpl<$Res>
+    implements _$$_AppImageCopyWith<$Res> {
+  __$$_AppImageCopyWithImpl(
+      _$_AppImage _value, $Res Function(_$_AppImage) _then)
+      : super(_value, (v) => _then(v as _$_AppImage));
+
+  @override
+  _$_AppImage get _value => super._value as _$_AppImage;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? createdAt = freezed,
+    Object? title = freezed,
+    Object? url = freezed,
+    Object? postId = freezed,
+  }) {
+    return _then(_$_AppImage(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      postId: postId == freezed
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_AppImage implements _AppImage {
+  const _$_AppImage(
+      {@JsonKey(name: 'iid') required this.id,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      required this.title,
+      @JsonKey(name: 'storage_path') required this.url,
+      @JsonKey(name: 'post_id') required this.postId});
+
+  factory _$_AppImage.fromJson(Map<String, dynamic> json) =>
+      _$$_AppImageFromJson(json);
+
+  @override
+  @JsonKey(name: 'iid')
+  final int id;
+  @override
+  @JsonKey(name: 'created_at')
+  final DateTime createdAt;
+  @override
+  final String title;
+  @override
+  @JsonKey(name: 'storage_path')
+  final String url;
+  @override
+  @JsonKey(name: 'post_id')
+  final int postId;
+
+  @override
+  String toString() {
+    return 'AppImage(id: $id, createdAt: $createdAt, title: $title, url: $url, postId: $postId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AppImage &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality().equals(other.url, url) &&
+            const DeepCollectionEquality().equals(other.postId, postId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(createdAt),
+      const DeepCollectionEquality().hash(title),
+      const DeepCollectionEquality().hash(url),
+      const DeepCollectionEquality().hash(postId));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_AppImageCopyWith<_$_AppImage> get copyWith =>
+      __$$_AppImageCopyWithImpl<_$_AppImage>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_AppImageToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AppImage implements AppImage {
+  const factory _AppImage(
+      {@JsonKey(name: 'iid') required final int id,
+      @JsonKey(name: 'created_at') required final DateTime createdAt,
+      required final String title,
+      @JsonKey(name: 'storage_path') required final String url,
+      @JsonKey(name: 'post_id') required final int postId}) = _$_AppImage;
+
+  factory _AppImage.fromJson(Map<String, dynamic> json) = _$_AppImage.fromJson;
+
+  @override
+  @JsonKey(name: 'iid')
+  int get id;
+  @override
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt;
+  @override
+  String get title;
+  @override
+  @JsonKey(name: 'storage_path')
+  String get url;
+  @override
+  @JsonKey(name: 'post_id')
+  int get postId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AppImageCopyWith<_$_AppImage> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 Liked _$LikedFromJson(Map<String, dynamic> json) {

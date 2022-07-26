@@ -15,6 +15,9 @@ _$_Post _$$_PostFromJson(Map<String, dynamic> json) => _$_Post(
       temperature: (json['temperature'] as num).toDouble(),
       airPressure: (json['air_pressure'] as num).toDouble(),
       humidity: (json['humidity'] as num).toDouble(),
+      images: json['images'] == null
+          ? const []
+          : Post._imagesFromJson(json['images'] as List?),
       postedBy: AppUser.fromJson(json['users'] as Map<String, dynamic>),
       likes: json['liked'] == null
           ? const []
@@ -30,8 +33,26 @@ Map<String, dynamic> _$$_PostToJson(_$_Post instance) => <String, dynamic>{
       'temperature': instance.temperature,
       'air_pressure': instance.airPressure,
       'humidity': instance.humidity,
+      'images': Post._imagesToJson(instance.images),
       'users': instance.postedBy,
       'liked': Post._usersToJson(instance.likes),
+    };
+
+_$_AppImage _$$_AppImageFromJson(Map<String, dynamic> json) => _$_AppImage(
+      id: json['iid'] as int,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      title: json['title'] as String,
+      url: json['storage_path'] as String,
+      postId: json['post_id'] as int,
+    );
+
+Map<String, dynamic> _$$_AppImageToJson(_$_AppImage instance) =>
+    <String, dynamic>{
+      'iid': instance.id,
+      'created_at': instance.createdAt.toIso8601String(),
+      'title': instance.title,
+      'storage_path': instance.url,
+      'post_id': instance.postId,
     };
 
 _$_Liked _$$_LikedFromJson(Map<String, dynamic> json) => _$_Liked(

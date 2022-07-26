@@ -15,6 +15,14 @@ class Post with _$Post {
     required double temperature,
     @JsonKey(name: 'air_pressure') required double airPressure,
     required double humidity,
+
+    @Default([])
+    @JsonKey(
+      name: 'images',
+      fromJson: Post._imagesFromJson,
+      toJson: Post._imagesToJson,
+    ) List<AppImage>? images,
+
     @JsonKey(
       name: 'users',
     ) required AppUser postedBy,
@@ -29,6 +37,23 @@ class Post with _$Post {
   }) = _Post;
 
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
+
+  static List<AppImage>? _imagesFromJson(List<dynamic>? list) {
+    if (list == null) {
+      return [];
+    }
+
+    return list.map((e) => AppImage.fromJson(e)).toList();
+  }
+
+  static List<Map<String, dynamic>>? _imagesToJson(
+      List<AppImage>? list) {
+    if (list == null) {
+      return [];
+    }
+
+    return list.map((e) => e.toJson()).toList();
+  }
 
   static List<Liked>? _usersFromJson(List<dynamic>? list) {
     if (list == null) {
@@ -46,6 +71,19 @@ class Post with _$Post {
 
     return list.map((e) => e.toJson()).toList();
   }
+}
+
+@freezed
+class AppImage with _$AppImage {
+  const factory AppImage({
+    @JsonKey(name: 'iid') required int id,
+    @JsonKey(name: 'created_at') required DateTime createdAt,
+    required String title,
+    @JsonKey(name: 'storage_path') required String url,
+    @JsonKey(name: 'post_id') required int postId,
+  }) = _AppImage;
+
+  factory AppImage.fromJson(Map<String, dynamic> json) => _$AppImageFromJson(json);
 }
 
 @freezed
