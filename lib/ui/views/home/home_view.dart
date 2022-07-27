@@ -27,6 +27,12 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Weathr'),
+        leading: IconButton(
+          icon: const Icon(Icons.logout),
+          onPressed: () {
+            viewModel.logout();
+          },
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),

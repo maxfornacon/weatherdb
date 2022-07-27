@@ -31,6 +31,11 @@ class HomeViewModel extends FutureViewModel<List<Post>> {
     _logger.i('Init');
   }
 
+  void logout() {
+    _authService.signOut();
+    _navigationService.pushNamedAndRemoveUntil(Routes.signInView);
+  }
+
   Future<List<Post>> _fetchPosts() async {
     final response = await _postService.fetchPostsDesc();
 

@@ -1,5 +1,5 @@
-import 'dart:io';
 
+import 'package:universal_io/io.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
@@ -28,6 +28,12 @@ class CreatePostViewModel extends FormViewModel {
   @override
   void setFormStatus() {}
 
+  @override
+  dispose() {
+    super.dispose();
+    images.clear();
+  }
+
   Future<XFile?> pickImageGallery() async {
     final ImagePicker picker = ImagePicker();
     // Pick an image
@@ -50,11 +56,11 @@ class CreatePostViewModel extends FormViewModel {
       final response = await _postService.create(
         PostDto(
           text: textValue ?? '',
-          latitude: double.parse(latitudeValue!) ?? 0.0,
-          longitude: double.parse(longitudeValue!) ?? 0.0,
-          temperature: double.parse(temperatureValue!) ?? 0.0,
-          airPressure: double.parse(airPressureValue!) ?? 0.0,
-          humidity: double.parse(humidityValue!) ?? 0.0,
+          latitude: double.parse(latitudeValue!),
+          longitude: double.parse(longitudeValue!),
+          temperature: double.parse(temperatureValue!),
+          airPressure: double.parse(airPressureValue!),
+          humidity: double.parse(humidityValue!),
           postedBy: _authService.user!.uid,
           createdAt: DateTime.now(),
         ).toJson(),

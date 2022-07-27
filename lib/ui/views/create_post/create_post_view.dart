@@ -38,6 +38,12 @@ class CreatePostView extends ViewModelBuilderWidget<CreatePostViewModel>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Post'),
+        leading: BackButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+            disposeForm();
+          },
+        ),
       ),
       body: SingleChildScrollView(
         controller: ScrollController(),
@@ -164,7 +170,10 @@ class CreatePostView extends ViewModelBuilderWidget<CreatePostViewModel>
               const SizedBox(height: 15),
               AppButton(
                 label: 'Create',
-                onPressed: viewModel.createPost,
+                onPressed: () {
+                  viewModel.createPost();
+                  disposeForm();
+                },
                 loading: viewModel.isBusy,
               ),
               const SizedBox(height: 15),
