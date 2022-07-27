@@ -7,15 +7,11 @@ import 'package:weather/app/app.router.dart';
 import 'package:weather/app/supabase_api.dart';
 import 'package:weather/datamodels/application_models.dart';
 import 'package:weather/datamodels/post/post.dart';
-import 'package:weather/services/grocery_service.dart';
-import 'package:weather/services/product_service.dart';
 
 class SearchViewModel extends ChangeNotifier {
   final _logger = Logger();
-  final _productService = locator<ProductService>();
   final _navigationServce = locator<NavigationService>();
   final _snackbarService = locator<SnackbarService>();
-  final _groceryService = locator<GroceryService>();
 
   TextEditingController searchController = TextEditingController();
   List<dynamic> searchResults = [];

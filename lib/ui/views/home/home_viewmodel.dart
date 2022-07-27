@@ -7,13 +7,11 @@ import 'package:weather/app/app.router.dart';
 import 'package:weather/datamodels/application_models.dart';
 import 'package:weather/datamodels/post/post.dart';
 import 'package:weather/services/authentication_service.dart';
-import 'package:weather/services/grocery_service.dart';
 import 'package:weather/services/post_service.dart';
 
 class HomeViewModel extends FutureViewModel<List<Post>> {
   final _logger = Logger();
   final _navigationService = locator<NavigationService>();
-  final _groceryService = locator<GroceryService>();
   final _authService = locator<AuthenticationService>();
   final _bottomSheetService = locator<BottomSheetService>();
   final _snackbarService = locator<SnackbarService>();
