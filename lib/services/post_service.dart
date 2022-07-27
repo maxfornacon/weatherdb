@@ -17,6 +17,14 @@ class PostService extends SupabaseService<Post> {
         .execute();
   }
 
+  Future<PostgrestResponse> fetchPostsOfFollowedDesc(String uid) async {
+    return await supabase
+        .from("follows")
+        .select("users!follows_followed_fkey(*, posts!posts_posted_by_fkey(*, users!posts_posted_by_fkey(*), liked(*, users(*)), images(*)))")
+        .eq('follower', uid)
+        .execute();
+  }
+
   Future<PostgrestResponse> likePost({required int postId, required String userId}) async {
     return await supabase
         .from("liked")

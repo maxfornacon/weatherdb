@@ -110,4 +110,11 @@ class SearchViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void toUserProfile(AppUser user) {
+    _navigationServce.navigateTo(
+      Routes.userProfileView,
+      arguments: UserProfileViewArguments(user: user),
+    );
+  }
+
 }

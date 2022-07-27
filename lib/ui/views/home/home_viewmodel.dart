@@ -37,14 +37,27 @@ class HomeViewModel extends FutureViewModel<List<Post>> {
   }
 
   Future<List<Post>> _fetchPosts() async {
-    final response = await _postService.fetchPostsDesc();
+    final response = await _postService.fetchPostsOfFollowedDesc(user!.uid);
 
     if (response.error != null) {
       return [];
     }
 
     final list = response.data as List;
-    return list.map((e) => Post.fromJson(e)).toList();
+
+    List<Post> posts = [];
+
+    try {
+      for (Map<String, dynamic> map in list) {
+        var user = map['users'];
+        for (Map<String, dynamic> post in user['posts'] as List) {
+          posts.add(Post.fromJson(post));
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+    return posts;
   }
 
   bool isLiked(Post post) {

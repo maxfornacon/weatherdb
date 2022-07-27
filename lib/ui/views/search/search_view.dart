@@ -130,22 +130,21 @@ class _SearchViewState extends State<SearchView> with TickerProviderStateMixin {
           },
         ),
         Container(),
-        Builder(
-          builder: (context) {
-            return ListView.builder(
-              itemCount: model.searchResults.length,
-              itemBuilder: (context, index) {
-                if (model.searchResults[index] is AppUser) {
-                  AppUser user = model.searchResults[index];
-                  return ListTile(
-                    title: Text(user.username),
-                  );
-                }
-                return Container();
-              },
-            );
-          }
-        ),
+        ListView.builder(
+          itemCount: model.searchResults.length,
+          itemBuilder: (context, index) {
+            if (model.searchResults[index] is AppUser) {
+              AppUser user = model.searchResults[index];
+              return ListTile(
+                title: Text(user.username),
+                onTap: () {
+                  model.toUserProfile(user);
+                },
+              );
+            }
+            return Container();
+          },
+        )
       ],
     );
   }
