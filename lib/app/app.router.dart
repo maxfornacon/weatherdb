@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../datamodels/application_models.dart';
 import '../ui/views/create_grocery/create_grocery_view.dart';
 import '../ui/views/create_post/create_post_view.dart';
 import '../ui/views/create_product/create_product_view.dart';
@@ -21,6 +22,7 @@ import '../ui/views/search/search_view.dart';
 import '../ui/views/sign_in/sign_in_view.dart';
 import '../ui/views/sign_up/sign_up_view.dart';
 import '../ui/views/startup/startup_view.dart';
+import '../ui/views/users/user_profile_view.dart';
 
 class Routes {
   static const String startupView = '/';
@@ -33,6 +35,7 @@ class Routes {
   static const String productSelectionView = '/product-selection-view';
   static const String createPostView = '/create-post-view';
   static const String searchView = '/search-view';
+  static const String userProfileView = '/user-profile-view';
   static const all = <String>{
     startupView,
     homeView,
@@ -44,6 +47,7 @@ class Routes {
     productSelectionView,
     createPostView,
     searchView,
+    userProfileView,
   };
 }
 
@@ -61,6 +65,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.productSelectionView, page: ProductSelectionView),
     RouteDef(Routes.createPostView, page: CreatePostView),
     RouteDef(Routes.searchView, page: SearchView),
+    RouteDef(Routes.userProfileView, page: UserProfileView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -133,6 +138,16 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    UserProfileView: (data) {
+      var args = data.getArgs<UserProfileViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => UserProfileView(
+          key: args.key,
+          user: args.user,
+        ),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -152,6 +167,13 @@ class ProductSelectionViewArguments {
   final Key? key;
   final String groceryId;
   ProductSelectionViewArguments({this.key, required this.groceryId});
+}
+
+/// UserProfileView arguments holder class
+class UserProfileViewArguments {
+  final Key? key;
+  final AppUser user;
+  UserProfileViewArguments({this.key, required this.user});
 }
 
 /// ************************************************************************
@@ -318,6 +340,25 @@ extension NavigatorStateExtension on NavigationService {
   }) async {
     return navigateTo(
       Routes.searchView,
+      id: routerId,
+      preventDuplicates: preventDuplicates,
+      parameters: parameters,
+      transition: transition,
+    );
+  }
+
+  Future<dynamic> navigateToUserProfileView({
+    Key? key,
+    required AppUser user,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo(
+      Routes.userProfileView,
+      arguments: UserProfileViewArguments(key: key, user: user),
       id: routerId,
       preventDuplicates: preventDuplicates,
       parameters: parameters,

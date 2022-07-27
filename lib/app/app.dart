@@ -6,6 +6,7 @@ import 'package:weather/services/image_service.dart';
 import 'package:weather/services/local_storage_service.dart';
 import 'package:weather/services/post_service.dart';
 import 'package:weather/services/product_service.dart';
+import 'package:weather/services/user_service.dart';
 import 'package:weather/ui/views/create_grocery/create_grocery_view.dart';
 import 'package:weather/ui/views/create_post/create_post_view.dart';
 import 'package:weather/ui/views/create_product/create_product_view.dart';
@@ -16,6 +17,7 @@ import 'package:weather/ui/views/search/search_view.dart';
 import 'package:weather/ui/views/sign_in/sign_in_view.dart';
 import 'package:weather/ui/views/sign_up/sign_up_view.dart';
 import 'package:weather/ui/views/startup/startup_view.dart';
+import 'package:weather/ui/views/users/user_profile_view.dart';
 
 @StackedApp(
   logger: StackedLogger(),
@@ -31,7 +33,8 @@ import 'package:weather/ui/views/startup/startup_view.dart';
     
 
     MaterialRoute(page: CreatePostView),
-    MaterialRoute(page: SearchView)
+    MaterialRoute(page: SearchView),
+    MaterialRoute(page: UserProfileView),
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),
@@ -45,6 +48,7 @@ import 'package:weather/ui/views/startup/startup_view.dart';
 
     LazySingleton(classType: PostService),
     LazySingleton(classType: ImageService),
+    LazySingleton(classType: UserService),
   ],
 )
 class AppSetup {}

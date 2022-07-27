@@ -15,6 +15,7 @@ import '../services/image_service.dart';
 import '../services/local_storage_service.dart';
 import '../services/post_service.dart';
 import '../services/product_service.dart';
+import '../services/user_service.dart';
 
 final locator = StackedLocator.instance;
 
@@ -35,4 +36,5 @@ Future<void> setupLocator(
   locator.registerLazySingleton(() => ProductService());
   locator.registerLazySingleton(() => PostService());
   locator.registerLazySingleton(() => ImageService());
+  locator.registerLazySingleton(() => UserService());
 }

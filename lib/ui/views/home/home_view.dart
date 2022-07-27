@@ -255,22 +255,27 @@ class _Body extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    child: Text(item.postedBy.username.substring(0, 1)),
-                  ),
-                  const SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppBoldText(
-                        item.postedBy.username,
-                      ),
-                      Text('${item.latitude}, ${item.longitude}'),
-                    ],
-                  ),
-                ],
+              child: GestureDetector(
+                onTap: () {
+                  viewModel.toUserProfileView(user: item.postedBy);
+                },
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      child: Text(item.postedBy.username.substring(0, 1)),
+                    ),
+                    const SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppBoldText(
+                          item.postedBy.username,
+                        ),
+                        Text('${item.latitude}, ${item.longitude}'),
+                      ],
+                    ),
+                  ],
+                ),
               )
             ),
             ImageSlideshow(

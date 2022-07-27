@@ -69,75 +69,20 @@ class HomeViewModel extends FutureViewModel<List<Post>> {
     return await _authService.fetchUser(id: id);
   }
 
-  Future<List<Grocery>> _fetchGroceryLists() async {
-    final response = await _groceryService.all();
-
-    if (response.error != null) {
-      return [];
-    }
-
-    final list = response.data as List;
-    return list.map((e) => Grocery.fromJson(e)).toList();
-  }
-
   void toCreatePostView() {
     _navigationService.navigateTo(Routes.createPostView);
   }
 
-  // void toCreateGroceryView() {
-  //   _navigationService.navigateTo(Routes.createGroceryView);
-  // }
-
+  void toUserProfileView({required AppUser user}) {
+    _navigationService.navigateTo(
+      Routes.userProfileView,
+      arguments: UserProfileViewArguments(user: user),
+    );
+  }
 
   void toSearchView() {
     _navigationService.navigateTo(Routes.searchView);
   }
-
-  void toGroceryDetailView({required String id}) {
-    _navigationService.navigateTo(
-      Routes.groceryDetailView,
-      arguments: GroceryDetailViewArguments(id: id),
-    );
-  }
-
-  // Future<void> onLongPressedGroceryList(String id) async {
-  //   try {
-  //     final response = await _bottomSheetService.showBottomSheet(
-  //       title: 'Confirm Delete',
-  //       description: 'This action will be irreversible.',
-  //     );
-  //     _logger.i('${response?.confirmed}, ${response?.responseData}');
-  //     if (response?.confirmed == false) {
-  //       _logger.i('Not confirmed');
-  //       return;
-  //     }
-  //
-  //     await deleteGroceryList(id);
-  //   } catch (e) {
-  //     _snackbarService.showSnackbar(title: 'Error', message: e.toString());
-  //   }
-  // }
-
-  // Future<void> deleteGroceryList(String id) async {
-  //   try {
-  //     setBusyForObject(id, true);
-  //     final response = await _groceryService.delete(id);
-  //
-  //     if (response.error != null) {
-  //       _logger.e(response.error?.message);
-  //       return;
-  //     }
-  //
-  //     _snackbarService.showSnackbar(
-  //       title: 'Success',
-  //       message: 'Grocery list deleted',
-  //     );
-  //     data?.removeWhere((element) => element.id == id);
-  //     notifyListeners();
-  //   } catch (e) {} finally {
-  //     setBusyForObject('delete-grocery-list', false);
-  //   }
-  // }
 
   void signOut() {
     _authService.signOut();
