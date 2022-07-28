@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:weather/app/app.locator.dart';
+import 'package:weather/app/app.router.dart';
 import 'package:weather/datamodels/post/post.dart';
 import 'package:weather/ui/views/search/search_viewmodel.dart';
 
@@ -16,17 +19,19 @@ class SearchView extends StatefulWidget {
 class _SearchViewState extends State<SearchView> with TickerProviderStateMixin {
   late TabController tabController;
   late SearchViewModel searchViewModel;
+  final _navigationService = locator<NavigationService>();
 
   @override
   void initState() {
     super.initState();
     searchViewModel = SearchViewModel();
-    tabController = TabController(length: 3, vsync: this);
-    tabController.addListener(() {
-        if(tabController.indexIsChanging) {
-          searchViewModel.search(searchViewModel.searchController.text, tabController.index);
-        }
-      });
+    tabController = TabController(length: 4, vsync: this);
+    tabController.addListener(() async {
+      if(!tabController.indexIsChanging) {
+        await searchViewModel.search(searchViewModel.searchController.text, tabController.index);
+        print(searchViewModel.searchResults);
+      }
+    });
   }
 
   @override
@@ -38,7 +43,6 @@ class _SearchViewState extends State<SearchView> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print('build');
     return ViewModelBuilder<SearchViewModel>.reactive(
       viewModelBuilder: () => searchViewModel,
       builder: (context, model, child) {
@@ -84,6 +88,9 @@ class _SearchViewState extends State<SearchView> with TickerProviderStateMixin {
                   text: 'Images',
                 ),
                 Tab(
+                  text: 'Posts',
+                ),
+                Tab(
                   text: 'Users',
                 ),
               ],
@@ -97,6 +104,39 @@ class _SearchViewState extends State<SearchView> with TickerProviderStateMixin {
 
   Widget _body({required SearchViewModel model, required TabController tabController}) {
     DateFormat dateFormat = DateFormat('dd.MM.yyyy - HH:mm');
+
+    Widget _buildImageListTile(AppImage image) {
+      return ListTile(
+        leading: Image.network('https://hqtlidhkyxtztlthydry.supabase.co/storage/v1/object/public/${image.url}'),
+        title: Text(image.title),
+        subtitle: Text(dateFormat.format(image.createdAt).toString()),
+      );
+    }
+
+    Widget _buildPostListTile(Post post) {
+      return ListTile(
+        onTap: () {
+          _navigationService.navigateTo(
+            Routes.postView,
+            arguments: PostViewArguments(post: post),
+          );
+        },
+        title: Text(post.text.length > 40 ? '${post.text.substring(0, 40)}...': post.text),
+        subtitle: Text('${dateFormat.format(post.createdAt)} by ${post.postedBy
+            .username}'),
+      );
+    }
+
+    Widget _buildUserListTile(AppUser user) {
+      return ListTile(
+        leading: CircleAvatar(child: Text(user.username.substring(0, 1))),
+        title: Text(user.username),
+        onTap: () {
+          model.toUserProfile(user);
+        },
+      );
+    }
+
     return TabBarView(
       controller: tabController,
       children: [
@@ -108,43 +148,57 @@ class _SearchViewState extends State<SearchView> with TickerProviderStateMixin {
             }
             if (model.searchResults[index] is AppImage) {
               AppImage image = model.searchResults[index];
-              return ListTile(
-                leading: Image.network('https://hqtlidhkyxtztlthydry.supabase.co/storage/v1/object/public/${image.url}'),
-                title: Text(image.title),
-                subtitle: Text(dateFormat.format(image.createdAt).toString()),
-              );
+              return _buildImageListTile(image);
             } else if (model.searchResults[index] is Post) {
               Post post = model.searchResults[index];
-              return ListTile(
-                title: Text(post.text),
-                subtitle: Text(post.humidity.toString()),
-              );
+              return _buildPostListTile(post);
+            } else if (model.searchResults[index] is AppUser) {
+              AppUser user = model.searchResults[index];
+              return _buildUserListTile(user);
             } else {
-              return Builder(
-                builder: (context) {
-                  model.searchUsers(model.searchController.text.trim());
-                  return Container();
-                }
-              );
+              return Container();
             }
           },
         ),
-        Container(),
         ListView.builder(
           itemCount: model.searchResults.length,
           itemBuilder: (context, index) {
-            if (model.searchResults[index] is AppUser) {
-              AppUser user = model.searchResults[index];
-              return ListTile(
-                title: Text(user.username),
-                onTap: () {
-                  model.toUserProfile(user);
-                },
-              );
+            if (model.searchResults.isEmpty) {
+              return Container();
+            }
+            if (model.searchResults[index] is AppImage) {
+              AppImage image = model.searchResults[index];
+              return _buildImageListTile(image);
             }
             return Container();
           },
-        )
+        ),
+        ListView.builder(
+          itemCount: model.searchResults.length,
+          itemBuilder: (context, index) {
+            if (model.searchResults.isEmpty) {
+              return Container();
+            }
+            if (model.searchResults[index] is Post) {
+              Post post =  model.searchResults[index];
+              return _buildPostListTile(post);
+            }
+            return Container();
+          },
+        ),
+        ListView.builder(
+          itemCount: model.searchResults.length,
+          itemBuilder: (context, index) {
+            if (model.searchResults.isEmpty) {
+              return Container();
+            }
+            if (model.searchResults[index] is AppUser) {
+              AppUser user = model.searchResults[index];
+              return _buildUserListTile(user);
+            }
+            return Container();
+          },
+        ),
       ],
     );
   }

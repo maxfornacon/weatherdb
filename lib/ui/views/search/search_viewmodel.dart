@@ -31,12 +31,13 @@ class SearchViewModel extends ChangeNotifier {
           .from('images')
           .select()
           .textSearch('fts', searchTerm,
-        type: TextSearchType.websearch,
-        config: 'english',
-      )
+              type: TextSearchType.websearch,
+              config: 'english',
+            )
           .execute();
 
       if (imageResult.error != null) {
+        print(imageResult.error);
         return [];
       }
 
@@ -50,41 +51,93 @@ class SearchViewModel extends ChangeNotifier {
         final postResult = await supabase
             .from('posts')
             .select(
-            "*, users!posts_posted_by_fkey(*), liked(*, users(*)), images(*)")
-            .textSearch('fts', "'$searchTerm'",
-          type: TextSearchType.websearch,
-          config: 'english',
-        )
+                "*, users!posts_posted_by_fkey(*), liked(*, users(*)), images(*)")
+                .textSearch('fts', "'$searchTerm'",
+              type: TextSearchType.websearch,
+              config: 'english',
+            )
             .execute();
 
-
-        print(postResult.data);
-
         if (postResult.error != null) {
+          print(postResult.error);
           return [];
         }
 
         final postResultList = postResult.data as List;
         searchResults.addAll(
             postResultList.map((e) => Post.fromJson(e)).toList());
+        notifyListeners();
       }
-    } else if (tabIndex == 1) {
 
+      if (searchResults.length < 20) {
+        searchUsers(searchTerm);
+      }
     } else if (tabIndex == 2) {
+      final postResult = await supabase
+          .from('posts')
+          .select(
+              "*, users!posts_posted_by_fkey(*), liked(*, users(*)), images(*)")
+              .textSearch('fts', "'$searchTerm'",
+            type: TextSearchType.websearch,
+            config: 'english',
+          )
+          .execute();
+
+      if (postResult.error != null) {
+        print(postResult.error);
+        return [];
+      }
+
+      final postResultList = postResult.data as List;
+      searchResults.addAll(
+          postResultList.map((e) => Post.fromJson(e)).toList());
+
+      // notifyListeners();
+    } else if (tabIndex == 1) {
+      searchResults.clear();
+      searchImages(searchTerm);
+    } else if (tabIndex == 3) {
+      searchResults.clear();
       searchUsers(searchTerm);
     }
 
-    // print(searchResults);
+    print(searchResults);
 
     notifyListeners();
 
     return searchResults;
   }
 
-  void searchUsers(String searchTerm) async {
+  void searchImages(String searchTerm) async {
     _logger.i('Searching for ${searchController.text}');
 
-    searchResults.clear();
+    /// TextSearchType.websearch allows to use a search engine like input
+    ///
+    /// text not inside quote marks will be converted to terms separated
+    /// by & operators, as if processed by plainto_tsquery.
+    final imageResult = await supabase
+        .from('images')
+        .select()
+        .textSearch('fts', searchTerm,
+      type: TextSearchType.websearch,
+      config: 'english',
+    )
+        .execute();
+
+    if (imageResult.error != null) {
+      print(imageResult.error);
+      return;
+    }
+
+    final imageResultList = imageResult.data as List;
+    searchResults.addAll(
+        imageResultList.map((e) => AppImage.fromJson(e)).toList());
+
+    notifyListeners();
+  }
+
+  void searchUsers(String searchTerm) async {
+    _logger.i('Searching for ${searchController.text}');
 
     /// TextSearchType.websearch allows to use a search engine like input
     ///

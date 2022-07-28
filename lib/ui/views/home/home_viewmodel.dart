@@ -69,6 +69,7 @@ class HomeViewModel extends FutureViewModel<List<Post>> {
   }
 
   Future<void> likePost(Post post) async {
+    _logger.i('Like post');
     await _postService.likePost(postId: post.pid, userId: user!.uid);
   }
 
